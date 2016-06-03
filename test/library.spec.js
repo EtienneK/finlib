@@ -1,5 +1,5 @@
 import chai from 'chai';
-import { fv, pv, npv } from '../lib/finlib.js';
+import { fv, pv, pmt, npv } from '../lib/finlib.js';
 
 const assert = chai.assert;
 const delta = 1e-9;
@@ -7,7 +7,7 @@ const delta = 1e-9;
 var lib;
 
 it('fv() Tests', () => {
-  let f, r, y, p, n, t;
+  let r, y, p, n, t;
 
   r = 0; n = 3; y = 2; p = 7; t = true;
   assert.closeTo(fv(r, n, y, p, t), -13, delta, 'fv');
@@ -32,7 +32,7 @@ it('fv() Tests', () => {
 });
 
 it('pv() Tests', () => {
-  let f, r, y, p, x, n, t;
+  let f, r, y, n, t;
   
   r = 0; n = 3; y = 2; f = 7; t = true;
   assert.closeTo(pv(r, n, y, f, t), -13, delta, 'pv');
@@ -54,6 +54,25 @@ it('pv() Tests', () => {
   
   r = 2; n = 12; y = 120; f = -6472951200; t = true;
   assert.closeTo(pv(r, n, y, f, t), 12000, delta, 'pv');
+});
+
+it('pmt() Tests', () => {
+  let f, r, p, n, t;
+  
+  r = 0; n = 3; p = 2; f = 7; t = true;
+  assert.closeTo(pmt(r, n, p, f, t), -3, delta, 'pv');
+  
+  r = 1; n = 10; p = -109.66796875; f = 10000; t = false;
+  assert.closeTo(pmt(r, n, p, f, t), 100, delta, 'pv');
+  
+  r = 1; n = 10; p = -209.5703125; f = 10000; t = true;
+  assert.closeTo(pmt(r, n, p, f, t), 100, delta, 'pv');
+  
+  r = 2; n = 12; f = -6409178400; p = 12000; t = false;
+  assert.closeTo(pmt(r, n, p, f, t), 120, delta, 'pv');
+  
+  r = 2; n = 12; f = -6472951200; p = 12000; t = true;
+  assert.closeTo(pmt(r, n, p, f, t), 120, delta, 'pv');
 });
 
 it('npv() Tests', () => {

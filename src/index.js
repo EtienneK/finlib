@@ -7,7 +7,8 @@
  * @param {number} [pv=0] is the present value, or the lump-sum amount that a series of future payments is worth now.
  * @param {boolean} [type=false] is a value representing the timing of payment: payment at the beginning
  *                               of the period == true; payment at the end of the period == false or omitted.
- * @returns {number} the future value of an investment based on periodic, constant payments and a constant interest rate.
+ * @returns {number} the future value of an investment based on periodic, constant payments and a
+ *                   constant interest rate.
  */
 export function fv(rate, nper, pmt, pv = 0, type = false) {
   if (rate === 0) {
@@ -38,6 +39,26 @@ export function pv(rate, nper, pmt, fv = 0, type = false) {
   const r1 = rate + 1;
 
   return (((1 - Math.pow(r1, nper)) / rate) * (type ? r1 : 1) * pmt - fv) / Math.pow(r1, nper);
+}
+
+/**
+ * Payment
+ *
+ * @param {number} rate is the interest rate per period. For example, use 6%/4 for quarterly payments at 6% APR.
+ * @param {number} nper is the total number of payment periods in the investment.
+ * @param {number} pv is the present value, or the lump-sum amount that a series of future payments is worth now.
+ * @param {number} [fv=0] is the future value, or a cash balance you want to attain after the last payment is made.
+ * @param {boolean} [type=false] is a value representing the timing of payment: payment at the beginning
+ *                               of the period == true; payment at the end of the period == false or omitted.
+ * @returns {number} the payment based on constant payments and a constant interest rate.
+ */
+export function pmt(rate, nper, pv, fv = 0, type = false) {
+  if (rate === 0) {
+    return -1 * (fv + pv) / nper;
+  }
+  const r1 = rate + 1;
+
+  return (fv + pv * Math.pow(r1, nper)) * rate / ((type ? r1 : 1) * (1 - Math.pow(r1, nper)));
 }
 
 /**
