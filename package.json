@@ -1,7 +1,7 @@
 {
-  "name": "webpack-library-starter",
-  "version": "0.1.3",
-  "description": "Produce universal library with webpack and es6",
+  "name": "finlib",
+  "version": "0.0.1",
+  "description": "Library with financial functions - fully unit tested",
   "main": "lib/finlib.js",
   "scripts": {
     "build": "webpack --mode=build",
@@ -35,10 +35,11 @@
     "umd",
     "commonjs"
   ],
-  "author": "Krasimir Tsonev",
+  "author": "Etienne Koekemoer",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/EtienneK/finlib/issues"
   },
-  "homepage": "https://github.com/EtienneK/finlib"
+  "homepage": "https://github.com/EtienneK/finlib",
+  "directories": {}
 }
