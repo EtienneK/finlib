@@ -114,7 +114,7 @@ export function nper(rate, pmt, pv, fv = 0, type = false) {
  * @param {number} per is the period for which you want to find the interest and must be in the range 1 to nper.
  * @param {number} nper is the total number of payment periods in the investment.
  * @param {number} pv is the present value, or the lump-sum amount that a series of future payments is worth now.
- * @param {number} [fv=0] is the future value, or a cash balance you want to attain after the last payment is made.
+ * @param {number} [fv_=0] is the future value, or a cash balance you want to attain after the last payment is made.
  * @param {boolean} [type=false] is a value representing the timing of payment: payment at the beginning
  *                               of the period == true; payment at the end of the period == false or omitted.
  * @returns {number} the interest payment for a given period for an investment, based on periodic, constant
