@@ -1,5 +1,5 @@
 import chai from 'chai';
-import { fv, pv, pmt, npv, nper } from '../lib/finlib.js';
+import { fv, pv, pmt, npv, nper, ipmt } from '../lib/finlib.js';
 
 const assert = chai.assert;
 const delta = 1e-9;
@@ -108,4 +108,11 @@ it('nper() Tests', () => {
 
   r = 2; y = 120; f = -6472951200; p = 12000; t = true;
   assert.closeTo(nper(r, y, p, f, t), 12, delta, 'nper');
+});
+
+it('ipmt() Tests', () => {
+  assert.closeTo(ipmt(0.1 / 12, 6, 2 * 12, 100000, 1000000, false), 928.8235718400465, delta, 'ipmt');
+  assert.closeTo(ipmt(0.1 / 12, 6, 2 * 12, 100000, 1000000, true), 921.1473439736042, delta, 'ipmt');
+  assert.closeTo(ipmt(0.1 / 12, 1, 2 * 12, 100000, 1000000, true), 0, delta, 'ipmt');
+  assert.closeTo(ipmt(0.1 / 12, 1, 2 * 12, 100000, 1000000, false), -833.3333333333334, delta, 'ipmt');
 });

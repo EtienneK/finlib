@@ -106,3 +106,37 @@ export function nper(rate, pmt, pv, fv = 0, type = false) {
 
   return (a1 - a2) / a3;
 }
+
+/**
+ * Interest Payment
+ *
+ * @param {number} rate is the interest rate per period. For example, use 6%/4 for quarterly payments at 6% APR.
+ * @param {number} per is the period for which you want to find the interest and must be in the range 1 to nper.
+ * @param {number} nper is the total number of payment periods in the investment.
+ * @param {number} pv is the present value, or the lump-sum amount that a series of future payments is worth now.
+ * @param {number} [fv=0] is the future value, or a cash balance you want to attain after the last payment is made.
+ * @param {boolean} [type=false] is a value representing the timing of payment: payment at the beginning
+ *                               of the period == true; payment at the end of the period == false or omitted.
+ * @returns {number} the interest payment for a given period for an investment, based on periodic, constant
+ *                   payments and a constant interest rate.
+ */
+export function ipmt(rate, per, nper, pv, fv_ = 0, type = false) {
+  const payment = pmt(rate, nper, pv, fv_, type);
+  let interest;
+
+  if (per === 1) {
+    if (type) {
+      interest = 0;
+    } else {
+      interest = -pv;
+    }
+  } else {
+    if (type) {
+      interest = fv(rate, per - 2, payment, pv, true) - payment;
+    } else {
+      interest = fv(rate, per - 1, payment, pv, false);
+    }
+  }
+
+  return interest * rate;
+}
