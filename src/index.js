@@ -81,3 +81,28 @@ export function npv(rate, ...cashFlows) {
   }
   return npv;
 }
+
+/**
+ * Number of Periods
+ *
+ * @param {number} rate is the interest rate per period. For example, use 6%/4 for quarterly payments at 6% APR.
+ * @param {number} pmt is the payment made each period; it cannot change over the life of the investment.
+ * @param {number} pv is the present value, or the lump-sum amount that a series of future payments is worth now.
+ * @param {number} [fv=0] is the future value, or a cash balance you want to attain after the last payment is made.
+ * @param {boolean} [type=false] is a value representing the timing of payment: payment at the beginning
+ *                               of the period == true; payment at the end of the period == false or omitted.
+ * @returns {number} the number of periods for an investment based on periodic,
+ *                   constant payments and a constant interest rate.
+ */
+export function nper(rate, pmt, pv, fv = 0, type = false) {
+  if (rate === 0) {
+    return -1 * (fv + pv) / pmt;
+  }
+  const r1 = rate + 1;
+  const ryr = (type ? r1 : 1) * pmt / rate;
+  const a1 = ((ryr - fv) < 0) ? Math.log(fv - ryr) : Math.log(ryr - fv);
+  const a2 = ((ryr - fv) < 0) ? Math.log(-pv - ryr) : Math.log(pv + ryr);
+  const a3 = Math.log(r1);
+
+  return (a1 - a2) / a3;
+}
